@@ -1,0 +1,27 @@
+{
+  "name": "tau",
+  "productName": "TAU ChatBot",
+  "version": "2.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "forever start -a -o ./out.log -e ./err.log --uid 'tau-widget' index.js",
+    "stop": "forever stop tau-widget",
+    "server": "nodemon index.js"
+  },
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "cookie-parser": "^1.4.3",
+    "dotenv": "^6.0.0",
+    "express": "^4.15.4",
+    "express-session": "1.15.6",
+    "moment": "^2.22.2",
+    "request": "^2.88.0"
+  },
+  "description": "",
+  "author": "The Geek Squad",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^1.19.1"
+  }
+}
