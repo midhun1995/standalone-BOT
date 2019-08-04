@@ -3,6 +3,7 @@ var express = require("express"),
 router = express.Router();
 var path = require('path');
 const requestAPI = require('request');
+const getJSON = require('./getJSON')
 
 const googleAuth = require('google-oauth-jwt');
 var accessToken = "";
@@ -26,7 +27,11 @@ res.sendFile(path.join(__dirname + '/../views/index.html'));
 router.post("/webhook", async (req, res) => {
 dialogflowApi(accessToken, req)
 .then(body => {
-    res.send(body);
+  getJSON.makeJSON(body)
+  .then(result => {
+    res.send(result);
+  })
+    
 })
 });
 
@@ -52,7 +57,7 @@ return new Promise (async (resolve) => {
                     dialogflowApi(token, req)
                 })
             }
-            console.log(JSON.stringify(body));
+            // console.log(JSON.stringify(body));
             resolve(body);
         }
     });

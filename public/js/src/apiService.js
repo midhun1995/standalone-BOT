@@ -185,20 +185,20 @@ define(['jquery', 'settings', 'utils', 'messageTemplates', 'cards', 'uuid'],
                         let hasbutton;
                         console.log('result *** ', JSON.stringify(response));
                         var dataList = document.getElementById('msg_container').getElementsByTagName("li");
-                        // if (config.incompleteTran.includes(response.queryResult.action)) {
+                        // if (config.incompleteTran.includes(response.result.action)) {
                         //     console.log('Inside incomplete');
                         //     return utils.writeIncompleteTran(response.result, "PostLogin", "BroadBand", function (err, res) {
                         //         console.log(res);
                         //     });
                         // }
-                        if (response.queryResult.action == "input.unknown") {
+                        if (response.result.action == "input.unknown") {
                             fallbackCount++;
                             oFallbackCount++;
                             //console.log('==== ',oFallbackCount);
                         } else {
                             fallbackCount = 0;
                         }
-                        // if(response.queryResult.action == "input.GlassSize"){
+                        // if(response.result.action == "input.GlassSize"){
                         //     $.ajax({
                         //         type: "POST",
                         //         url: "/claimCreate",
@@ -209,7 +209,7 @@ define(['jquery', 'settings', 'utils', 'messageTemplates', 'cards', 'uuid'],
                         //                     }})
 
                         // }
-                        if (response.queryResult.action == "Optus") {
+                        if (response.result.action == "Optus") {
                             utils.captureTranscript(dataList);
                             fallbackCount, oFallbackCount = 0;
                             callback(null, "Liveengage");
@@ -226,14 +226,14 @@ define(['jquery', 'settings', 'utils', 'messageTemplates', 'cards', 'uuid'],
                             msg_container.append(html_div);
                             utils.scrollSmoothToBottom($('div.chat-body'));
                             callback(null, "Liveengage");
-                        } else if (response.queryResult.fulfillmentMessages) {
-                            console.log(response.queryResult.fulfillmentMessages);
-                            for (let i in response.queryResult.fulfillmentMessages) {
-                                if (response.queryResult.fulfillmentMessages[i] && response.queryResult.fulfillmentMessages[i].hasOwnProperty('type')) {
-                                    if (response.queryResult.fulfillmentMessages[i].type == 0 && response.queryResult.fulfillmentMessages[i].speech != "") {
-                                        if (response.queryResult.action == 'input.date') {
+                        } else if (response.result.fulfillment.messages) {
+                            console.log(response.result.fulfillment.messages);
+                            for (let i in response.result.fulfillment.messages) {
+                                if (response.result.fulfillment.messages[i] && response.result.fulfillment.messages[i].hasOwnProperty('type')) {
+                                    if (response.result.fulfillment.messages[i].type == 0 && response.result.fulfillment.messages[i].speech != "") {
+                                        if (response.result.action == 'input.date') {
                                             let cardHTML = cards({
-                                                "payload": response.queryResult.fulfillmentMessages[i].speech,
+                                                "payload": response.result.fulfillment.messages[i].speech,
                                                 "senderName": config.botTitle,
                                                 "senderAvatar": config.botAvatar,
                                                 "time": utils.currentTime(),
@@ -242,7 +242,7 @@ define(['jquery', 'settings', 'utils', 'messageTemplates', 'cards', 'uuid'],
                                             callback(null, cardHTML);
                                         } else {
                                             let cardHTML = cards({
-                                                "payload": response.queryResult.fulfillmentMessages[i].speech,
+                                                "payload": response.result.fulfillment.messages[i].speech,
                                                 "senderName": config.botTitle,
                                                 "senderAvatar": config.botAvatar,
                                                 "time": utils.currentTime(),
@@ -251,15 +251,15 @@ define(['jquery', 'settings', 'utils', 'messageTemplates', 'cards', 'uuid'],
                                             callback(null, cardHTML);
                                         }
                                     }
-                                    if (response.queryResult.fulfillmentMessages[i].type == 1) {
+                                    if (response.result.fulfillment.messages[i].type == 1) {
                                         count = count + 1;
-                                        hasbutton = (response.queryResult.fulfillmentMessages[i].buttons.length > 0) ? true : false;
+                                        hasbutton = (response.result.fulfillment.messages[i].buttons.length > 0) ? true : false;
                                         isCardorCarousel = true;
                                     }
-                                    if (response.queryResult.fulfillmentMessages[i].type == 3) {
+                                    if (response.result.fulfillment.messages[i].type == 3) {
                                         isImage = true;
                                     }
-                                    let msgfulfill = response.queryResult.fulfillmentMessages[i];
+                                    let msgfulfill = response.result.fulfillment.messages[i];
 
                                     if (msgfulfill && msgfulfill.type == 4 && msgfulfill.hasOwnProperty("payload") && msgfulfill.payload.hasOwnProperty("facebook")) {
                                         //Quick Replies
@@ -274,14 +274,14 @@ define(['jquery', 'settings', 'utils', 'messageTemplates', 'cards', 'uuid'],
 
                                         if (msgfulfill.payload.facebook.hasOwnProperty("attachment")) {
                                             count = count + 1;
-                                            response.queryResult.fulfillmentMessages = response.queryResult.fulfillmentMessages[i]["payload"]["facebook"]["attachment"]["payload"]["elements"]
+                                            response.result.fulfillment.messages = response.result.fulfillment.messages[i]["payload"]["facebook"]["attachment"]["payload"]["elements"]
 
-                                            for (let j in response.queryResult.fulfillmentMessages) {
-                                                response.queryResult.fulfillmentMessages[j]["type"] = 1
-                                                response.queryResult.fulfillmentMessages[j]["imageUrl"] = response.queryResult.fulfillmentMessages[j]["image_url"]
+                                            for (let j in response.result.fulfillment.messages) {
+                                                response.result.fulfillment.messages[j]["type"] = 1
+                                                response.result.fulfillment.messages[j]["imageUrl"] = response.result.fulfillment.messages[j]["image_url"]
                                             }
 
-                                            hasbutton = (response.queryResult.fulfillmentMessages[i] && response.queryResult.fulfillmentMessages[i].hasOwnProperty("buttons") && response.queryResult.fulfillmentMessages[i].buttons.length > 0) ? true : false;
+                                            hasbutton = (response.result.fulfillment.messages[i] && response.result.fulfillment.messages[i].hasOwnProperty("buttons") && response.result.fulfillment.messages[i].buttons.length > 0) ? true : false;
                                             isCardorCarousel = true;
                                         }
                                     }
@@ -289,8 +289,8 @@ define(['jquery', 'settings', 'utils', 'messageTemplates', 'cards', 'uuid'],
                             }
                         } else {
                             let cardHTML = cards({
-                                "action": response.queryResult.action,
-                                "payload": response.queryResult.fulfillmentMessages.speech,
+                                "action": response.result.action,
+                                "payload": response.result.fulfillment.speech,
                                 "senderName": config.botTitle,
                                 "senderAvatar": config.botAvatar,
                                 "time": utils.currentTime(),
@@ -303,8 +303,8 @@ define(['jquery', 'settings', 'utils', 'messageTemplates', 'cards', 'uuid'],
                         if (isCardorCarousel) {
                             if (count == 1) {
                                 let cardHTML = cards({
-                                    "action": response.queryResult.action,
-                                    "payload": response.queryResult.fulfillmentMessages,
+                                    "action": response.result.action,
+                                    "payload": response.result.fulfillment.messages,
                                     "senderName": config.botTitle,
                                     "senderAvatar": config.botAvatar,
                                     "time": utils.currentTime(),
@@ -314,8 +314,8 @@ define(['jquery', 'settings', 'utils', 'messageTemplates', 'cards', 'uuid'],
                                 callback(null, cardHTML);
                             } else {
                                 let carouselHTML = cards({
-                                    "action": response.queryResult.action,
-                                    "payload": response.queryResult.fulfillmentMessages,
+                                    "action": response.result.action,
+                                    "payload": response.result.fulfillment.messages,
                                     "senderName": config.botTitle,
                                     "senderAvatar": config.botAvatar,
                                     "time": utils.currentTime(),
@@ -328,13 +328,13 @@ define(['jquery', 'settings', 'utils', 'messageTemplates', 'cards', 'uuid'],
                         }
                         //Image Response
                         if (isImage) {
-                            let cardHTML = cards(response.queryResult.fulfillmentMessages, "image");
+                            let cardHTML = cards(response.result.fulfillment.messages, "image");
                             callback(null, cardHTML);
                         }
                         //CustomPayload Quickreplies
                         if (isQuickReply) {
                             let cardHTML = cards({
-                                "payload": response.queryResult.fulfillmentMessages,
+                                "payload": response.result.fulfillment.messages,
                                 "senderName": config.botTitle,
                                 "senderAvatar": config.botAvatar,
                                 "time": utils.currentTime(),
@@ -344,7 +344,7 @@ define(['jquery', 'settings', 'utils', 'messageTemplates', 'cards', 'uuid'],
                         }
                         if (isQuickReplyImg) {
                             let cardHTML = cards({
-                                "payload": response.queryResult.fulfillmentMessages,
+                                "payload": response.result.fulfillment.messages,
                                 "senderName": config.botTitle,
                                 "senderAvatar": config.botAvatar,
                                 "time": utils.currentTime(),
@@ -353,12 +353,12 @@ define(['jquery', 'settings', 'utils', 'messageTemplates', 'cards', 'uuid'],
                             callback(null, cardHTML);
                         }
                         if (multiplequickreplyfromapiai) {
-                            let cardHTML = cards(response.queryResult.fulfillmentMessages, "multiplequickreplyfromapiai");
+                            let cardHTML = cards(response.result.fulfillment.messages, "multiplequickreplyfromapiai");
                             callback(null, cardHTML);
                         }
                         //Apiai Quickreply
                         if (isQuickReplyFromApiai) {
-                            let cardHTML = cards(response.queryResult.fulfillmentMessages, "quickrepliesfromapiai");
+                            let cardHTML = cards(response.result.fulfillment.messages, "quickrepliesfromapiai");
                             callback(null, cardHTML);
                         }
                         //Video Attachment Payload callback
@@ -408,7 +408,7 @@ define(['jquery', 'settings', 'utils', 'messageTemplates', 'cards', 'uuid'],
                         // airline Boarding Pass
                         if (isAirlineBoardingPass) {
                             let boardingPassHTML = cards({
-                                "payload": response.queryResult.fulfillmentMessages,
+                                "payload": response.result.fulfillment.messages,
                                 "senderName": config.botTitle,
                                 "senderAvatar": config.botAvatar,
                                 "time": utils.currentTime(),
@@ -422,7 +422,7 @@ define(['jquery', 'settings', 'utils', 'messageTemplates', 'cards', 'uuid'],
                         // airline Boarding Pass View bar code
                         if (isViewBoardingPassBarCode) {
                             let ViewBoardingPassBarCodeHTML = cards({
-                                "payload": response.queryResult.fulfillmentMessages,
+                                "payload": response.result.fulfillment.messages,
                                 "senderName": config.botTitle,
                                 "senderAvatar": config.botAvatar,
                                 "time": utils.currentTime(),
@@ -434,7 +434,7 @@ define(['jquery', 'settings', 'utils', 'messageTemplates', 'cards', 'uuid'],
                         // airline Checkin
                         if (isAirlineCheckin) {
                             let CheckinHTML = cards({
-                                "payload": response.queryResult.fulfillmentMessages,
+                                "payload": response.result.fulfillment.messages,
                                 "senderName": config.botTitle,
                                 "senderAvatar": config.botAvatar,
                                 "time": utils.currentTime(),
@@ -447,7 +447,7 @@ define(['jquery', 'settings', 'utils', 'messageTemplates', 'cards', 'uuid'],
                         // airline flight update
                         if (isAirlingFlightUpdate) {
                             let CheckinHTML = cards({
-                                "payload": response.queryResult.fulfillmentMessages,
+                                "payload": response.result.fulfillment.messages,
                                 "senderName": config.botTitle,
                                 "senderAvatar": config.botAvatar,
                                 "time": utils.currentTime(),
@@ -471,7 +471,7 @@ define(['jquery', 'settings', 'utils', 'messageTemplates', 'cards', 'uuid'],
                         // List template
                         if (isList) {
                             let cardHTML = cards({
-                                "payload": response.queryResult.fulfillmentMessages,
+                                "payload": response.result.fulfillment.messages,
                                 "senderName": config.botTitle,
                                 "senderAvatar": config.botAvatar,
                                 "time": utils.currentTime(),

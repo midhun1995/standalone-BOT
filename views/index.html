@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="mobile-web-app-capable" content="yes">
-	<link rel="manifest" href="/manifest.json">
+	<!-- <link rel="manifest" href="manifest.json"> -->
   <title>TAU</title>
   <link rel="shortcut icon" href="avatar/blank.ico" />
   <link rel="stylesheet" href="style/bootstrap.min.css">
@@ -155,12 +155,10 @@
             }
           });
         });
-
         //triggered when modal is about to be shown
         $('#center-dialog').on('show.bs.modal', function (e) {
           $('#modal-img-holder').attr('src', $(e.relatedTarget).data('src'));
           $('#modal-btndownload').attr('href', $(e.relatedTarget).data('src'));
-
         });
         function checkSRC()
           {
@@ -175,10 +173,7 @@
               alert("HAS a value");
             }
           }
-
         document.getElementById("btn-input").focus();
-
-
         $(document.body).ready(function () {
           var isMobile = (/android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(navigator.userAgent.toLowerCase()));
           if (isMobile) {
@@ -186,9 +181,6 @@
           } else {
             $("html").addClass("desktop-device");
           }
-
-
-
         });
       }
       require(['lib/jquery.min'], function () {
