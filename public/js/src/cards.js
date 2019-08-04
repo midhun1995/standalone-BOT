@@ -28,6 +28,7 @@ define(['messageTemplates', 'uuid'], function (messageTpl, uuidv1) {
             }
             //Return Carousel Response Type Payload
             if (this.responseType == "carousel") {
+                console.log('carousel');
                 return messageTpl.carousel(this.data, uuidv1());
             }
             //Return Quick replies Response Type Payload
