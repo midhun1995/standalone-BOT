@@ -420,8 +420,8 @@ This file is part of the Innovation LAB - Offline Bott.
           line-height: 1.4;
       font-family: Roboto !important;
       font-size: 15px;
-      color: #4d4c4c;
-      background-color: #e8f4f9;
+      color: #000;
+      background-color: #b0e3fa;
       overflow-wrap: break-word;
       max-width: 75%;
       float:right;
@@ -488,8 +488,8 @@ This file is part of the Innovation LAB - Offline Bott.
        line-height: 1.4;
        font-family: Roboto !important;
        font-size: 11pt;
-       color: #999999;
-       /* background-color: #e8f4f9; */
+       color: #000;
+        background-color: #ddf3d3; 
        overflow-wrap: break-word;
        max-width: 90%;
        /* max-height: 73%; */
