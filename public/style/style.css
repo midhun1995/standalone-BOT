@@ -687,7 +687,7 @@ This file is part of the Innovation LAB - Offline Bott.
   .pmd-card-actions {
     display: grid;
     /* text-align: right; */
-    padding: 8px 4px;
+    padding: 8px 49px;
   }
   
   .infocard-btn-custom{
@@ -1281,3 +1281,8 @@ This file is part of the Innovation LAB - Offline Bott.
     opacity: 0;
   }
   
+
+  .chatopenclose {
+    float: right;
+    margin-right:0;
+  }

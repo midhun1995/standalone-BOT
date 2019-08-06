@@ -17,6 +17,7 @@
   <!-- Propeller css -->
   <link href="style/propeller.min.css" rel="stylesheet">
   <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" type="text/css" href="style/style.css">
 
   <!--Animate css -->
@@ -48,8 +49,14 @@
 
     </div>
   </div> -->
+  <button id="chatopen" class="chatbox-open chatopenclose" style="color: #77b4c9">
+    <i class="fa fa-comment fa-2x" aria-hidden="true"></i>
+  </button>
+<button id="chatclose" class="chatbox-close chatopenclose" style="color: #e98787">
+    <i class="fa fa-close fa-2x" aria-hidden="true"></i>
+  </button>
 
-  <div class="container-fluid main-container no-scroll-x">
+  <div class="container-fluid main-container no-scroll-x chatbox-popup" >
 
     <!-- <div class="row header-popup">
       <div class="pmd-card pmd-z-depth card-custom-view showheader" style="margin-bottom: 4px;">
@@ -195,6 +202,18 @@
       objDiv.scrollTop = objDiv.scrollHeight;
 
       $('#chatbody').scrollTop(1000000);
+
+      const chatbox = jQuery.noConflict();
+
+chatbox(() => {
+  chatbox(".chatbox-open").click(() =>
+    chatbox(".chatbox-popup, .chatbox-close").fadeIn()
+  );
+
+  chatbox(".chatbox-close").click(() =>
+    chatbox(".chatbox-popup, .chatbox-close").fadeOut()
+  );
+})
     </script>
 
 </body>
