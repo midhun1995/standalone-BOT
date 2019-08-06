@@ -74,7 +74,7 @@ This file is part of the Innovation LAB - Offline Bott.
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.21), 0 6px 20px 0 rgba(0, 0, 0, 0); */
     /*margin-top: -65px;
     margin-left: -65px; */
-    width: 200px;
+    width: 172px;
     height: 220px;
     background-position: center;
     background-repeat: no-repeat;
@@ -115,7 +115,7 @@ This file is part of the Innovation LAB - Offline Bott.
     font-size: 18pt;
     color: #999999;
     position: relative;
-    padding-top: 23%;
+    padding-top: 19%;
   }
   
   .pmd-list .list-group-item {
