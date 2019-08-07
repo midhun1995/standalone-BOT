@@ -1,9 +1,6 @@
 'use strict';
 
-/* -------------------------------------------------------------------
-Copyright (c) 2017-2017 Hexaware Technologies
-This file is part of the Innovation LAB - Offline Bot.
-------------------------------------------------------------------- */
+
 function showmesgtext(msg) {
     document.getElementById("btn-input").focus();
     document.getElementById("btn-input").value += msg.childNodes[0].data;
