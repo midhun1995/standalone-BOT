@@ -1,7 +1,4 @@
-/* -------------------------------------------------------------------
-Copyright (c) 2017-2017 Hexaware Technologies
-This file is part of the Innovation LAB - Offline Bott.
-------------------------------------------------------------------- */
+
 /* Bootstrap css */
 @font-face {
   font-family: "markpro";
@@ -676,8 +673,8 @@ This file is part of the Innovation LAB - Offline Bott.
   .material-icons.custom-arrow-color-right { color: #FB8C00; }*/
   
   /* To show carousel controls only on hover like Facebook */
-  .carousel .carousel-control { opacity: 0; transition: opacity 0.5s ease-in;}
-  .carousel:hover .carousel-control { opacity: 1; transition: opacity 0.5s ease-in;}
+  .carousel .carousel-control { opacity: 1; transition: opacity 0.5s ease-in;}
+  /* .carousel:hover .carousel-control { opacity: 1; transition: opacity 0.5s ease-in;}*/
   
   .mobile-device .carousel .carousel-control { opacity: 1;}
   .pmd-textfield textarea.form-control:focus {

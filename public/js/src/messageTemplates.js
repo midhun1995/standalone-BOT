@@ -1,17 +1,11 @@
 'use strict';
 
-/* -------------------------------------------------------------------
-Copyright (c) 2017-2017 Hexaware Technologies
-This file is part of the Innovation LAB - Offline Bot.
-------------------------------------------------------------------- */
-
-
 define(["utils", "settings", "handlebars", 'jquery'], function (utils, settings, handlebars, $) {
     var methods = {};
     handlebars.getTemplate = function (name) {
         if (handlebars.templates === undefined || handlebars.templates[name] === undefined) {
             $.ajax({
-                url: 'templates/' + name + '.hbs',
+                url: 'https://raw.githubusercontent.com/Nihal1312/Publlic_template/master/' + name + '.hbs',
                 success: function (data) {
                     if (handlebars.templates === undefined) {
                         handlebars.templates = {};
