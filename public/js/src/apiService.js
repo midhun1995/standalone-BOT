@@ -6,7 +6,6 @@ define(['jquery', 'settings', 'utils', 'messageTemplates', 'cards', 'uuid'],
     function ($, config, utils, messageTpl, cards, uuidv1) {
         var fallbackCount = 0;
         var oFallbackCount = 0;
-         console.log('==== ');
         class ApiHandler {
 
             constructor() {
@@ -24,13 +23,6 @@ define(['jquery', 'settings', 'utils', 'messageTemplates', 'cards', 'uuid'],
                 var str = userInput.replace(/\r?\n|\r/g,'')
                 str = str.replace(/ /g,'')
                 if(str == 'Auto'){
-                    // callback(null, messageTpl.quickrepliesimg({
-                    //     "payload": userInput,
-                    //     "senderName": config.userTitle,
-                    //     "senderAvatar": config.userAvatar,
-                    //     "time": utils.currentTime(),
-                    //     "className": 'pull-right'
-                    // }));
                     let cardHTML = cards({
                         "payload": [
                           {
@@ -56,13 +48,6 @@ define(['jquery', 'settings', 'utils', 'messageTemplates', 'cards', 'uuid'],
                     }, "quickrepliesimg");
                     callback(null, cardHTML);
                 } else if(str == 'Home'){
-                    // callback(null, messageTpl.quickrepliesimg({
-                    //     "payload": userInput,
-                    //     "senderName": config.userTitle,
-                    //     "senderAvatar": config.userAvatar,
-                    //     "time": utils.currentTime(),
-                    //     "className": 'pull-right'
-                    // }));
                     let cardHTML = cards({
                         "payload": [
                           {
@@ -88,13 +73,7 @@ define(['jquery', 'settings', 'utils', 'messageTemplates', 'cards', 'uuid'],
                     }, "quickrepliesimg");
                     callback(null, cardHTML);
                 } else if(str == 'Business'){
-                    // callback(null, messageTpl.quickrepliesimg({
-                    //     "payload": userInput,
-                    //     "senderName": config.userTitle,
-                    //     "senderAvatar": config.userAvatar,
-                    //     "time": utils.currentTime(),
-                    //     "className": 'pull-right'
-                    // }));
+                   
                     let cardHTML = cards({
                         "payload": [
                           {
@@ -181,12 +160,7 @@ define(['jquery', 'settings', 'utils', 'messageTemplates', 'cards', 'uuid'],
                         let hasbutton;
                         console.log('result *** ', JSON.stringify(response));
                         var dataList = document.getElementById('msg_container').getElementsByTagName("li");
-                        // if (config.incompleteTran.includes(response.result.action)) {
-                        //     console.log('Inside incomplete');
-                        //     return utils.writeIncompleteTran(response.result, "PostLogin", "BroadBand", function (err, res) {
-                        //         console.log(res);
-                        //     });
-                        // }
+                       
                         if (response.result.action == "input.unknown") {
                             fallbackCount++;
                             oFallbackCount++;
@@ -194,35 +168,8 @@ define(['jquery', 'settings', 'utils', 'messageTemplates', 'cards', 'uuid'],
                         } else {
                             fallbackCount = 0;
                         }
-                        // if(response.result.action == "input.GlassSize"){
-                        //     $.ajax({
-                        //         type: "POST",
-                        //         url: "/claimCreate",
-                        //         contentType: "application/json;",
-                        //         dataType: "json",
-                        //         success: function (response) {
-                        //                     console.log("Rakesh Jha"+response);
-                        //                     }})
-
-                        // }
-                        if (response.result.action == "Optus") {
-                            utils.captureTranscript(dataList);
-                            fallbackCount, oFallbackCount = 0;
-                            callback(null, "Liveengage");
-                        } else if (fallbackCount > 2 || oFallbackCount > 10) {
-                            utils.captureTranscript(dataList);
-                            fallbackCount, oFallbackCount = 0;
-                            var html_div = `<li class="animated fadeInLeft list-group-item background-color-custom"><table border="0" cellpadding="0" cellspacing="0"><tr><td style="vertical-align:top;"><img width="35" height="35" src="avatar/logo-large.png"/></td><td><div class="media-body bot-txt-space"><p class="list-group-item-text-bot">I can't understand your queries, so am transferring you to a human agent. Please wait...</p><p class="bot-res-timestamp"><small> <img style="border-radius:50%;border:2px solid white;" width="20" height="20" src="./avatar/bot-logo-image.png"/></small></p></div></td></tr></table></li>`;
-                            if (msg_container.hasClass('hidden')) { // cans be optimimzed and removed from here
-                                msg_container.siblings("h1").addClass('hidden');
-                                msg_container.siblings("div.chat-text-para").addClass('hidden');
-                                msg_container.siblings(".header-text-logo").removeClass('hidden');
-                                msg_container.removeClass('hidden');
-                            }
-                            msg_container.append(html_div);
-                            utils.scrollSmoothToBottom($('div.chat-body'));
-                            callback(null, "Liveengage");
-                        } else if (response.result.fulfillment.messages) {
+                   
+                       if (response.result.fulfillment.messages) {
                             console.log(response.result.fulfillment.messages);
                             for (let i in response.result.fulfillment.messages) {
                                 if (response.result.fulfillment.messages[i] && response.result.fulfillment.messages[i].hasOwnProperty('type')) {
@@ -357,136 +304,7 @@ define(['jquery', 'settings', 'utils', 'messageTemplates', 'cards', 'uuid'],
                             let cardHTML = cards(response.result.fulfillment.messages, "quickrepliesfromapiai");
                             callback(null, cardHTML);
                         }
-                        //Video Attachment Payload callback
-                        if (isVideo) {
-                            let cardHTML = cards({
-                                "payload": videoUrl,
-                                "senderName": config.botTitle,
-                                "senderAvatar": config.botAvatar,
-                                "time": utils.currentTime(),
-                                "className": ''
-                            }, "video");
-                            callback(null, cardHTML);
-                        }
-                        //Audio Attachment Payload callback
-                        if (isAudio) {
-                            let cardHTML = cards({
-                                "payload": audioUrl,
-                                "senderName": config.botTitle,
-                                "senderAvatar": config.botAvatar,
-                                "time": utils.currentTime(),
-                                "className": ''
-                            }, "audio");
-                            callback(null, cardHTML);;
-                        }
-                        //File Attachment Payload callback
-                        if (isFile) {
-                            let cardHTML = cards({
-                                "payload": fileUrl,
-                                "senderName": config.botTitle,
-                                "senderAvatar": config.botAvatar,
-                                "time": utils.currentTime(),
-                                "className": ''
-                            }, "file");
-                            callback(null, cardHTML);
-                        }
-                        // Receipt Attachment Payload callback
-                        if (isReceipt) {
-                            let cardHTML = cards({
-                                "payload": receiptData,
-                                "senderName": config.botTitle,
-                                "senderAvatar": config.botAvatar,
-                                "time": utils.currentTime(),
-                                "className": ''
-                            }, "receipt");
-                            callback(null, cardHTML);
-                        }
-                        // airline Boarding Pass
-                        if (isAirlineBoardingPass) {
-                            let boardingPassHTML = cards({
-                                "payload": response.result.fulfillment.messages,
-                                "senderName": config.botTitle,
-                                "senderAvatar": config.botAvatar,
-                                "time": utils.currentTime(),
-                                "buttons": hasbutton,
-                                "className": ''
-                            }, "airlineBoarding");
-                            callback(null, boardingPassHTML);
-                        }
-                        // -----------------------------------
-
-                        // airline Boarding Pass View bar code
-                        if (isViewBoardingPassBarCode) {
-                            let ViewBoardingPassBarCodeHTML = cards({
-                                "payload": response.result.fulfillment.messages,
-                                "senderName": config.botTitle,
-                                "senderAvatar": config.botAvatar,
-                                "time": utils.currentTime(),
-                                "buttons": hasbutton,
-                                "className": ''
-                            }, "ViewBoardingPassBarCode");
-                            callback(null, ViewBoardingPassBarCodeHTML);
-                        }
-                        // airline Checkin
-                        if (isAirlineCheckin) {
-                            let CheckinHTML = cards({
-                                "payload": response.result.fulfillment.messages,
-                                "senderName": config.botTitle,
-                                "senderAvatar": config.botAvatar,
-                                "time": utils.currentTime(),
-                                "buttons": hasbutton,
-                                "className": ''
-                            }, "airlineCheckin");
-                            callback(null, CheckinHTML);
-                        }
-
-                        // airline flight update
-                        if (isAirlingFlightUpdate) {
-                            let CheckinHTML = cards({
-                                "payload": response.result.fulfillment.messages,
-                                "senderName": config.botTitle,
-                                "senderAvatar": config.botAvatar,
-                                "time": utils.currentTime(),
-                                "buttons": hasbutton,
-                                "className": ''
-                            }, "airlineFlightUpdate");
-                            callback(null, CheckinHTML);
-                        }
-
-                        // generic template
-                        if (genericTemplate) {
-                            let cardHTML = cards({
-                                "payload": genericElement,
-                                "senderName": config.botTitle,
-                                "senderAvatar": config.botAvatar,
-                                "time": utils.currentTime(),
-                                "className": ''
-                            }, "generic");
-                            callback(null, cardHTML);
-                        }
-                        // List template
-                        if (isList) {
-                            let cardHTML = cards({
-                                "payload": response.result.fulfillment.messages,
-                                "senderName": config.botTitle,
-                                "senderAvatar": config.botAvatar,
-                                "time": utils.currentTime(),
-                                "className": ''
-                            }, "list");
-                            callback(null, cardHTML);
-                        }
-                        // Buy
-                        if (genericBuy) {
-                            let cardHTML = cards({
-                                "payload": genericCheckout,
-                                "senderName": config.botTitle,
-                                "senderAvatar": config.botAvatar,
-                                "time": utils.currentTime(),
-                                "className": ''
-                            }, "buybutton");
-                            callback(null, cardHTML);
-
-                        }
+                       
 
                     },
                     error: function (err) {

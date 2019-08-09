@@ -28,23 +28,9 @@ define(['messageTemplates', 'uuid'], function (messageTpl, uuidv1) {
                 console.log('carousel');
                 return messageTpl.carousel(this.data, uuidv1());
             }
-            //Return Quick replies Response Type Payload
-            if (this.responseType == "multiplequickreplyfromapiai") {
-                return messageTpl.multiplequickreplyfromapiai(this.data);
-            }
+            
             if (this.responseType == "quickreplies") {
                 return messageTpl.quickreplies(this.data);
-            }
-            if (this.responseType == "quickrepliesimg") {
-                return messageTpl.quickrepliesimg(this.data);
-            }
-
-            if (this.responseType == "quickrepliesfromapiai") {
-                return messageTpl.quickrepliesfromapiai(this.data);
-            }
-
-            if (this.responseType == "fileUpload") {
-                return messageTpl.fileUpload(this.data);
             }
 
         }

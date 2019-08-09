@@ -13,13 +13,7 @@ var port = process.env.PORT || 3000;
 
 app.use(bodyParser.json());
 app.use(cookieParser());
-app.use(session(
-  { secret: '0dc529ba-5051-4cd6-8b67-c9a901bb8bdf',
-    resave: false,
-    saveUninitialized: false
-  }));
 app.use(express.static(path.join(__dirname, "public")));
-// app.use(express.static(__dirname));
 app.use(bodyParser.urlencoded({ // to support URL-encoded bodies
   extended: true
 }));

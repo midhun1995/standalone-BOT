@@ -18,10 +18,9 @@ module.exports = {
             // console.log("@@#$#@$#@$55555555555555555555");
     
             for (var i = 0; i < body.queryResult.fulfillmentMessages.length; i++) {
-                console.log(body.queryResult.fulfillmentMessages[i]);
-                console.log("@#@#@#@#@#");
+                
                 if (body.queryResult.fulfillmentMessages[i].hasOwnProperty("card")) {
-                    console.log("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+                   
                     v1JSON.result.fulfillment.messages.push({
                         lang : 'en',
                         type : 1,
@@ -37,7 +36,7 @@ module.exports = {
                     // v1JSON.result.fulfillment.messages[i].platform = 'facebook';
                 }
                 if (body.queryResult.fulfillmentMessages[i].hasOwnProperty("text")) {
-                    console.log("DDDDDDDDDDDDDDDDDD");
+                   
                     v1JSON.result.fulfillment.messages.push({
                         lang : 'en',
                         type : 0,
@@ -49,7 +48,6 @@ module.exports = {
                 
                 if (body.queryResult.fulfillmentMessages[i].hasOwnProperty("payload")) {
                     console.log(body.queryResult.fulfillmentMessages[i].payload);
-                    console.log("^^^^^^^^^^^^^^^^^^");
                     v1JSON.result.fulfillment.messages.push({
                         lang : 'en',
                         type : 4,
@@ -60,7 +58,7 @@ module.exports = {
                 }
 
                 if (i == body.queryResult.fulfillmentMessages.length - 1) {
-                    console.log("WWWWWWWWWWWWWWWWW");
+                    
                     resolve(v1JSON)
                 }
             } 

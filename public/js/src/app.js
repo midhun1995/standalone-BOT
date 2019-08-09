@@ -113,7 +113,7 @@ define(['jquery', 'settings', 'apiService', 'utils'], function ($, config, apiSe
 
 
 
-        if (config.accessToken && config.chatServerURL) {
+        if (true) {
             var processor = apiService();
         }
 
